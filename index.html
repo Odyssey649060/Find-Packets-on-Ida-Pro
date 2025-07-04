@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <title>How to Find Packets on IDA Pro</title>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background-color: #f7f7f7;
@@ -87,7 +91,10 @@
   <h2>Starting IDA</h2>
   <p>When you open the file for the first time, you’ll see the analysis progress. Wait until it completes and looks clean.</p>
 
-  <h2 id="guide">My First Packet</h2>
+  <!-- AÑADE UN DIV CON ID PARA ASEGURAR QUE FUNCIONE EL ANCLA -->
+  <div id="guide"></div>
+
+  <h2>My First Packet</h2>
   <p>Let’s start with something simple.</p>
   <p><code>10121: UnlockAccountMessage</code></p>
   <p>This is the ID and name of the packet.</p>
@@ -119,4 +126,3 @@ sub_F1B90  = writeString
   <p>For example, try porting <code>TeamSetLocationMessage</code> from V15 to V22 to understand how the structures evolve.</p>
 </body>
 </html>
-
