@@ -69,6 +69,12 @@
     .button:hover {
       background-color: #2980b9;
     }
+
+    img {
+      max-width: 100%;
+      border-radius: 6px;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
@@ -78,51 +84,64 @@
   <a href="#guide" class="button">Go to the Step-by-Step Guide</a>
 
   <h2>Requirements</h2>
-  <p>Okay, before we start, you'll need the following tools:</p>
+  <p>Before we start, you'll need the following tools:</p>
   <ul>
     <li><strong>IDA Pro:</strong> <a href="https://drive.google.com/file/d/1RVPQcsiscdYbLjHpGB5E1T6UkVyrD7gT/view" target="_blank">Download here</a></li>
     <li>The <code>libg</code> file with debug symbols</li>
-    <li>The <code>libg.so</code> of your version of Brawl Stars (in this example, version V26)</li>
-    <li>A custom IDA script to fix V26 debug symbols</li>
+    <li>The <code>libg.so</code> of your version of Brawl Stars (we'll use V26 for this example)</li>
+    <li>A custom IDA script to fix the V26 debug symbols</li>
   </ul>
-  <p>To apply the script: open IDA Pro, go to <code>File &gt; Script File</code>, and select the script.</p>
-  <p><strong>⚡ Note:</strong> Run this script after IDA completes self-analysis.</p>
+  <p>To apply the script, go to IDA Pro → <code>File &gt; Script File</code> and select it after the autoanalysis completes.</p>
 
-  <h2>Starting IDA</h2>
-  <p>When you open the file for the first time, you’ll see the analysis progress. Wait until it completes and looks clean.</p>
+  <h2 id="guide">My First Packet</h2>
+  <p>Let's start with something simple.</p>
+  <p><strong>10121: UnlockAccountMessage</strong> — this is the ID and name of the packet.</p>
 
-  <!-- AÑADE UN DIV CON ID PARA ASEGURAR QUE FUNCIONE EL ANCLA -->
-  <div id="guide"></div>
+  <p>Open the two files in IDA Pro and wait for the autoanalysis to finish. Then in the lib with debug symbols (V36), run the aforementioned script.</p>
 
-  <h2>My First Packet</h2>
-  <p>Let’s start with something simple.</p>
-  <p><code>10121: UnlockAccountMessage</code></p>
-  <p>This is the ID and name of the packet.</p>
+  <p>Then press <code>ALT + i</code> and something like this will appear:</p>
 
-  <h2>Steps</h2>
-  <ol>
-    <li>Open both the <code>libg.so</code> and the <code>libg with debug symbols</code> in IDA Pro.</li>
-    <li>Wait for autoanalysis to finish.</li>
-    <li>In the debug version (V36), run the script as described above.</li>
-    <li>Press <code>ALT + i</code> and look for <code>UnlockAccountMessage</code>.</li>
-    <li>Double-click the result.</li>
-    <li>Press <code>X</code> to find cross-references.</li>
-    <li>Go to the function <code>_ZN20UnlockAccountMessage6encodeEv</code>.</li>
-    <li>Double-click it and then press <code>F5</code> to decompile.</li>
-  </ol>
+  <p><strong>V36:</strong></p>
+  <img src="https://imgur.com/RWcI9yA.png" alt="V36 ALT+i">
+  <p><strong>Your Version:</strong></p>
+  <img src="https://imgur.com/YFK2CYo.png" alt="Your Version ALT+i">
+
+  <p>Okay, we're doing well. Double click:</p>
+  <p><strong>V36:</strong></p>
+  <img src="https://imgur.com/pTu8r0m.png" alt="V36 double click">
+  <p><strong>Your Version:</strong></p>
+  <img src="https://imgur.com/xWKEPLn.png" alt="Your Version double click">
+
+  <p>Now press <code>X</code> for Xref:</p>
+  <p><strong>V36:</strong></p>
+  <img src="https://imgur.com/W0e2AHW.png" alt="V36 Xref">
+  <p><strong>Your Version:</strong></p>
+  <img src="https://imgur.com/nSVFQL5.png" alt="Your Version Xref">
+
+  <p>Then go to the function <code>_ZN20UnlockAccountMessage6encodeEv</code></p>
+  <p><strong>V36:</strong></p>
+  <img src="https://imgur.com/Zwk0kB0.png" alt="V36 encode">
+  <p><strong>Your Version:</strong></p>
+  <img src="https://imgur.com/IawoqXb.png" alt="Your Version encode">
+
+  <p>And double click. Now press <code>F5</code>.</p>
+
+  <p><strong>V36:</strong></p>
+  <img src="https://imgur.com/X1C37Ts.png" alt="V36 F5">
+  <p><strong>Your Version:</strong></p>
+  <img src="https://imgur.com/ojRdMdf.png" alt="Your Version F5">
 
   <h2>Understanding the Structure</h2>
-  <p>You will now see the packet structure. In this case:</p>
+  <p>It is possible that in your version there are more subs, so we need to identify what each <code>sub_</code> is.</p>
   <pre>
 sub_3D1124 = writeLong
 sub_F1B90  = writeString
 sub_F1B90  = writeString
 sub_F1B90  = writeString
   </pre>
-  <p>These function names (like <code>sub_3D1124</code>) refer to internal functions such as writing data. They can change between versions.</p>
+  <p>The subnames apply to all packets in this lib. In another version of Brawl Stars, the subname will likely be different.</p>
 
   <h2>Tip for Beginners</h2>
-  <p>If you're starting out, it's a good idea to try porting packets from one version to another.</p>
-  <p>For example, try porting <code>TeamSetLocationMessage</code> from V15 to V22 to understand how the structures evolve.</p>
+  <p>I recommend that beginners start by porting packets from one version to another. For example, try porting <code>TeamSetLocationMessage</code> from V15 to V22.</p>
 </body>
 </html>
