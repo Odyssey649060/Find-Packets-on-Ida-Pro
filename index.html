@@ -17,13 +17,106 @@
       color: #2c3e50;
     }
 
+    h2 {
+      color: #34495e;
+      margin-top: 30px;
+    }
+
     p {
       font-size: 18px;
+    }
+
+    code {
+      background-color: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    pre {
+      background-color: #eee;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #3498db;
+      color: white;
+      padding: 12px 20px;
+      margin-top: 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #2980b9;
     }
   </style>
 </head>
 <body>
   <h1>How to Find Packets on IDA Pro</h1>
   <p>This is a simple and detailed guide on how to find packets in IDA Pro for your Brawl Stars server.</p>
+
+  <a href="#guide" class="button">Go to the Step-by-Step Guide</a>
+
+  <h2>Requirements</h2>
+  <p>Okay, before we start, you'll need the following tools:</p>
+  <ul>
+    <li><strong>IDA Pro:</strong> <a href="https://drive.google.com/file/d/1RVPQcsiscdYbLjHpGB5E1T6UkVyrD7gT/view" target="_blank">Download here</a></li>
+    <li>The <code>libg</code> file with debug symbols</li>
+    <li>The <code>libg.so</code> of your version of Brawl Stars (in this example, version V26)</li>
+    <li>A custom IDA script to fix V26 debug symbols</li>
+  </ul>
+  <p>To apply the script: open IDA Pro, go to <code>File &gt; Script File</code>, and select the script.</p>
+  <p><strong>⚡ Note:</strong> Run this script after IDA completes self-analysis.</p>
+
+  <h2>Starting IDA</h2>
+  <p>When you open the file for the first time, you’ll see the analysis progress. Wait until it completes and looks clean.</p>
+
+  <h2 id="guide">My First Packet</h2>
+  <p>Let’s start with something simple.</p>
+  <p><code>10121: UnlockAccountMessage</code></p>
+  <p>This is the ID and name of the packet.</p>
+
+  <h2>Steps</h2>
+  <ol>
+    <li>Open both the <code>libg.so</code> and the <code>libg with debug symbols</code> in IDA Pro.</li>
+    <li>Wait for autoanalysis to finish.</li>
+    <li>In the debug version (V36), run the script as described above.</li>
+    <li>Press <code>ALT + i</code> and look for <code>UnlockAccountMessage</code>.</li>
+    <li>Double-click the result.</li>
+    <li>Press <code>X</code> to find cross-references.</li>
+    <li>Go to the function <code>_ZN20UnlockAccountMessage6encodeEv</code>.</li>
+    <li>Double-click it and then press <code>F5</code> to decompile.</li>
+  </ol>
+
+  <h2>Understanding the Structure</h2>
+  <p>You will now see the packet structure. In this case:</p>
+  <pre>
+sub_3D1124 = writeLong
+sub_F1B90  = writeString
+sub_F1B90  = writeString
+sub_F1B90  = writeString
+  </pre>
+  <p>These function names (like <code>sub_3D1124</code>) refer to internal functions such as writing data. They can change between versions.</p>
+
+  <h2>Tip for Beginners</h2>
+  <p>If you're starting out, it's a good idea to try porting packets from one version to another.</p>
+  <p>For example, try porting <code>TeamSetLocationMessage</code> from V15 to V22 to understand how the structures evolve.</p>
 </body>
 </html>
+
