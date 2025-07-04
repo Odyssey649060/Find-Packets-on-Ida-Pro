@@ -84,20 +84,25 @@
   <a href="#guide" class="button">Go to the Step-by-Step Guide</a>
 
   <h2>Requirements</h2>
-  <p>Before we start, you'll need the following tools:</p>
+  <p>Okay, before we start, we'll need these tools:</p>
   <ul>
     <li><strong>IDA Pro:</strong> <a href="https://drive.google.com/file/d/1RVPQcsiscdYbLjHpGB5E1T6UkVyrD7gT/view" target="_blank">Download here</a></li>
-    <li>The <code>libg</code> file with debug symbols</li>
-    <li>The <code>libg.so</code> of your version of Brawl Stars (we'll use V26 for this example)</li>
-    <li>A custom IDA script to fix the V26 debug symbols</li>
+    <li><strong>libg with Debug Symbols:</strong> <a href="https://drive.google.com/file/d/1ib131kTVviBEV55aan12nLSoF6xXF-nQ/view?usp=drive_link" target="_blank">Download here</a></li>
+    <li><strong>libg.so (your version, example V26):</strong> <a href="https://drive.google.com/file/d/1VVXGvTxPl4Pg_F7Q0I8CWDXyZS1Hseds/view?usp=drive_link" target="_blank">Download here</a></li>
+    <li><strong>IDA script to fix V26 debug symbols:</strong> <a href="https://drive.google.com/file/d/12n9A9M9SeUwDh8y1xft_26GPQRhOV7fE/view?usp=drive_link" target="_blank">Download here</a></li>
   </ul>
-  <p>To apply the script, go to IDA Pro → <code>File &gt; Script File</code> and select it after the autoanalysis completes.</p>
+
+  <p>To apply it, go to IDA Pro → <code>File &gt; Script File</code> and select it.</p>
+  <p><strong>⚡ This must be done after the autoanalysis is complete.</strong></p>
+
+  <p>When you open it for the first time, you'll see this:<br><em>Wait until it looks like this.</em></p>
 
   <h2 id="guide">My First Packet</h2>
   <p>Let's start with something simple.</p>
-  <p><strong>10121: UnlockAccountMessage</strong> — this is the ID and name of the packet.</p>
+  <p><strong>10121: UnlockAccountMessage</strong><br>ID Packet Name</p>
 
-  <p>Open the two files in IDA Pro and wait for the autoanalysis to finish. Then in the lib with debug symbols (V36), run the aforementioned script.</p>
+  <p>Open the two files in IDA Pro and wait for the autoanalysis to finish.<br>
+  Then in the lib with debug symbols (V36), run the aforementioned script.</p>
 
   <p>Then press <code>ALT + i</code> and something like this will appear:</p>
 
@@ -106,7 +111,7 @@
   <p><strong>Your Version:</strong></p>
   <img src="https://imgur.com/YFK2CYo.png" alt="Your Version ALT+i">
 
-  <p>Okay, we're doing well. Double click:</p>
+  <p>Okay, we're doing well.<br>Double click:</p>
   <p><strong>V36:</strong></p>
   <img src="https://imgur.com/pTu8r0m.png" alt="V36 double click">
   <p><strong>Your Version:</strong></p>
@@ -118,13 +123,13 @@
   <p><strong>Your Version:</strong></p>
   <img src="https://imgur.com/nSVFQL5.png" alt="Your Version Xref">
 
-  <p>Then go to the function <code>_ZN20UnlockAccountMessage6encodeEv</code></p>
+  <p>Then go to the function: <code>_ZN20UnlockAccountMessage6encodeEv</code></p>
   <p><strong>V36:</strong></p>
   <img src="https://imgur.com/Zwk0kB0.png" alt="V36 encode">
   <p><strong>Your Version:</strong></p>
   <img src="https://imgur.com/IawoqXb.png" alt="Your Version encode">
 
-  <p>And double click. Now press <code>F5</code>.</p>
+  <p>And double click.<br>Now press <code>F5</code>.</p>
 
   <p><strong>V36:</strong></p>
   <img src="https://imgur.com/X1C37Ts.png" alt="V36 F5">
@@ -132,16 +137,19 @@
   <img src="https://imgur.com/ojRdMdf.png" alt="Your Version F5">
 
   <h2>Understanding the Structure</h2>
-  <p>It is possible that in your version there are more subs, so we need to identify what each <code>sub_</code> is.</p>
+  <p>It is possible that in your version there are more <code>sub_</code> functions, so we need to identify what each one does.</p>
   <pre>
 sub_3D1124 = writeLong
 sub_F1B90  = writeString
 sub_F1B90  = writeString
 sub_F1B90  = writeString
   </pre>
-  <p>The subnames apply to all packets in this lib. In another version of Brawl Stars, the subname will likely be different.</p>
+  <p>The subname applies to all packets in this lib (in another version of Brawl Stars, the subname will be different).</p>
 
   <h2>Tip for Beginners</h2>
-  <p>I recommend that beginners start by porting packets from one version to another. For example, try porting <code>TeamSetLocationMessage</code> from V15 to V22.</p>
+  <p>I recommend that beginners start by porting packets from one version to another — for example, porting <code>TeamSetLocationMessage</code> from V15 to V22.</p>
+
+  <h2>Future</h2>
+  <p>I'd like to create a guide on how to enable offline battles and how to activate the lobby <code>InfoMessage</code> (<code>IsDev</code>).</p>
 </body>
 </html>
